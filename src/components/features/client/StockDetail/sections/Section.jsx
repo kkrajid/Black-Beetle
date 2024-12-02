@@ -17,7 +17,7 @@ export default function Section({ name, stockData }) {
                     <div className="w-1 h-4 bg-[#D7B257C9]"></div>
                     <span className="text-white">{label}:</span>
                 </div>
-                <span className="text-white text-xl">{price.toFixed(2)}</span>
+                <span className="text-white text-xl">{parseFloat(price).toFixed(2)}</span>
             </div>
             <div className={`${change >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                 {change >= 0 ? '+' : ''}{change.toFixed(2)} {((change / price) * 100).toFixed(2)}%
@@ -27,6 +27,7 @@ export default function Section({ name, stockData }) {
 
     const renderSummary = () => {
         if (!stockData) return <div className="text-white">Loading stock data...</div>;
+        const latestTrade = stockData.history[stockData.history.length - 1];
         return (
             <div className="text-white">
                 <div className="mb-8">
@@ -69,18 +70,18 @@ export default function Section({ name, stockData }) {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <TradeCard 
                             label="Buy" 
-                            price={stockData.price}
-                            change={stockData.change}
+                            price={latestTrade.buy}
+                            change={0}
                         />
                         <TradeCard 
                             label="Target" 
-                            price={stockData.price * 1.1}
-                            change={stockData.price * 0.1}
+                            price={latestTrade.target}
+                            change={parseFloat(latestTrade.target) - parseFloat(latestTrade.buy)}
                         />
                         <TradeCard 
                             label="Stop Loss" 
-                            price={stockData.price * 0.9}
-                            change={stockData.price * -0.1}
+                            price={latestTrade.sl}
+                            change={parseFloat(latestTrade.sl) - parseFloat(latestTrade.buy)}
                         />
                     </div>
                 </div>
@@ -89,14 +90,14 @@ export default function Section({ name, stockData }) {
                     <h2 className="text-[#D7B257C9] text-xl mb-4">Performance:</h2>
                     <div className="relative h-[200px] bg-[#1F1F1F] rounded-lg p-6">
                         <div className="absolute top-4 left-8 bg-red-500/20 text-red-500 px-4 py-1 rounded-full">
-                            SL (-10%) {(stockData.price * 0.9).toFixed(2)}
+                            SL {latestTrade.sl}
                         </div>
                         <div className="absolute top-1/2 left-8 right-8 h-2 bg-gradient-to-r from-red-500 via-blue-500 to-green-500 rounded-full"></div>
                         <div className="absolute bottom-4 right-8 bg-green-500/20 text-green-500 px-4 py-1 rounded-full">
-                            Target (+10%) {(stockData.price * 1.1).toFixed(2)}
+                            Target {latestTrade.target}
                         </div>
                         <div className="absolute bottom-4 right-1/2 transform translate-x-1/2 bg-blue-500/20 text-blue-500 px-4 py-1 rounded-full">
-                            Buy (0%) {stockData.price.toFixed(2)}
+                            Buy {latestTrade.buy}
                         </div>
                     </div>
                 </div>
@@ -105,16 +106,16 @@ export default function Section({ name, stockData }) {
                     <h2 className="text-[#D7B257C9] text-xl mb-4">Trade History:</h2>
                     {selectedOption === 'Current' ? (
                         <div className="bg-[#1F1F1F] rounded-lg p-6">
-                            <p>Current trade details for {stockData.symbol}</p>
+                            <p>Current trade details for {stockData.stock_index}</p>
                             <TradeCard 
                                 label="Current" 
-                                price={stockData.price}
-                                change={stockData.change}
+                                price={latestTrade.buy}
+                                change={0}
                             />
                         </div>
                     ) : (
                         <div className="bg-[#1F1F1F] rounded-lg p-6">
-                            <TradeHistoryGraph data={stockData.tradeHistory} />
+                            <TradeHistoryGraph data={stockData.history} />
                         </div>
                     )}
                 </div>
@@ -125,21 +126,54 @@ export default function Section({ name, stockData }) {
     const renderAnalysis = () => (
         <div className="text-white">
             <h2 className="text-[#D7B257C9] text-xl mb-4">Analysis</h2>
-            <p>Detailed analysis of {stockData?.symbol} performance and market trends would be displayed here.</p>
+            {stockData.analysis.map((analysis, index) => (
+                <div key={index} className="bg-[#1F1F1F] rounded-lg p-6 mb-4">
+                    <p>Bull Scenario: <span className={analysis.bull_scenario === 'positive' ? 'text-green-500' : 'text-red-500'}>{analysis.bull_scenario}</span></p>
+                    <p>Bear Scenario: <span className={analysis.bear_scenario === 'positive' ? 'text-green-500' : 'text-red-500'}>{analysis.bear_scenario}</span></p>
+                    <p>Status: <span className={analysis.status === 'BULLISH' ? 'text-green-500' : 'text-red-500'}>{analysis.status}</span></p>
+                </div>
+            ))}
         </div>
     );
 
     const renderHistory = () => (
         <div className="text-white">
             <h2 className="text-[#D7B257C9] text-xl mb-4">History</h2>
-            <p>Historical data and past performance metrics of {stockData?.symbol} would be shown in this section.</p>
+            <div className="bg-[#1F1F1F] rounded-lg p-6">
+                <table className="w-full">
+                    <thead>
+                        <tr>
+                            <th className="text-left">Date</th>
+                            <th className="text-left">Buy</th>
+                            <th className="text-left">Target</th>
+                            <th className="text-left">Stop Loss</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {stockData.history.map((trade, index) => (
+                            <tr key={index}>
+                                <td>{new Date(trade.changed_at).toLocaleDateString()}</td>
+                                <td>{trade.buy}</td>
+                                <td>{trade.target}</td>
+                                <td>{trade.sl}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 
     const renderPredictionVsActual = () => (
         <div className="text-white">
             <h2 className="text-[#D7B257C9] text-xl mb-4">Prediction v/s Actual Analysis</h2>
-            <p>Comparison between predicted stock performance and actual results for {stockData?.symbol} would be presented here.</p>
+            {stockData.insights.map((insight, index) => (
+                <div key={index} className="bg-[#1F1F1F] rounded-lg p-6 mb-4">
+                    <p>Prediction: {insight.prediction}</p>
+                    <p>Actual: {insight.actual}</p>
+                    <p>Difference: {Math.abs(insight.actual - insight.prediction)}</p>
+                </div>
+            ))}
         </div>
     );
 
@@ -167,3 +201,4 @@ export default function Section({ name, stockData }) {
         </div>
     );
 }
+
