@@ -15,10 +15,10 @@ export function StockDetails() {
     const [stockData, setStockData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    // ${symbol}
     useEffect(() => {
         setLoading(true);
-        fetch(`https://13.51.169.229/admin-side/trade/${symbol}/`)
+        fetch(`https://13.51.169.229/admin-side/trade/1/`)
             .then(response => response.json())
             .then(data => {
                 setStockData(data);
