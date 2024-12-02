@@ -291,7 +291,7 @@ console.log(tradesData);
               >
                 <div className="stock-card__image-wrapper w-[100px] h-[100px] -ml-[50px] -mt-[100px] absolute p-5 bg-white rounded-[35px]">
                   <img
-                    src={`/company-logos/${trade.stock_index.toLowerCase()}.png`}
+                    src={`https://logo.clearbit.com/${trade.stock_index.toLowerCase()}.com`}
                     alt={`${trade.company_name} Logo`}
                     className="w-full h-full object-contain"
                     onError={(e) => {
