@@ -6,14 +6,9 @@ import { ClientHome } from './pages/client/Home/ClientHome';
 import ClientStock from './pages/client/StockDashbord/ClientStockDashbord';
 import ClientStockDetails from './pages/client/StockDetail/ClinetStockDetails';
 import Login from './components/Auth/client/Login';
-// import { AdminLayout } from './components/AdminLayout';
-// import { ProtectedRoute } from './components/ProtectedRoute';
-// import * as AdminComponents from './components/AdminComponents';
-// import * as ClientComponents from './components/features/client/ClientComponents';
 
-// Placeholder auth functions (replace these with your actual auth logic)
-const isAuthenticated = () => true; // Replace with actual auth check
-const isAdmin = () => true; // Replace with actual admin check
+const isAuthenticated = () => true; 
+const isAdmin = () => true; 
 
 function App() {
   return (

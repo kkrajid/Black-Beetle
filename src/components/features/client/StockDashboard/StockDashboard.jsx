@@ -22,7 +22,7 @@ export function StockDashboard() {
   const {
     data: tradesData,
     isLoading,
-    error: fetchError
+    error: fetchError,refetch
   } = useQuery({
     queryKey: ["getTrades"],
     queryFn: getTrades,
@@ -67,6 +67,7 @@ console.log(tradesData);
 
     newSocket.onmessage = (event) => {
       try {
+        refetch();
         const data = JSON.parse(event.data);
 
         if (data.trade) {
