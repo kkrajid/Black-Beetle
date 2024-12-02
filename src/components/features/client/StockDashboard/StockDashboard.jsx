@@ -289,6 +289,8 @@ console.log(tradesData);
                 className="stock-card bg-gradient-to-br from-[#7b7729] to-black rounded-[30px] border-[#C58F0A] p-4 shadow-lg border-4 flex items-center relative cursor-pointer"
                 onClick={() => handleStockClick(trade.id)}
               >
+
+                
                 <div className="stock-card__image-wrapper w-[100px] h-[100px] -ml-[50px] -mt-[100px] absolute p-5 bg-white rounded-[35px]">
                   <img
                     src={`https://logo.clearbit.com/${trade.stock_index.toLowerCase().replace(/[\d% ]/g, '')}.com`}
