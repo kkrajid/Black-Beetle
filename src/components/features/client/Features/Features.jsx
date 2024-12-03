@@ -3,6 +3,7 @@ import { Line, LineChart, ResponsiveContainer } from "recharts"
 import { X, Search, BarChart3, RefreshCcw, Home, Settings } from 'lucide-react'
 import { Card } from './Card'
 import { Button } from './Button'
+import { Link } from 'react-router-dom'
 
 
 import InterBeteels from "@/assets/svg/InterBeteels";
@@ -186,7 +187,7 @@ export function Features() {
                             </ResponsiveContainer>
                         </div>
                         <Button variant="link" className="text-[#F4B740] hover:text-[#F4B740]/80 p-0 mt-4">
-                            Learn More
+                            <Link to="/trades">Learn More</Link>
                         </Button>
                     </Card>
                 </div>

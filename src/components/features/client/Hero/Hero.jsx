@@ -2,6 +2,7 @@ import React from 'react';
 import { TrendingUp, Lightbulb } from 'lucide-react';
 import Logo from "@/assets/images/black-beetles-logo.png";
 import Illustration from "@/assets/svg/Illustration";
+import { Link } from 'react-router-dom';
 
 export function Hero() {
   return (
@@ -25,7 +26,7 @@ export function Hero() {
               Identify stocks completing corrections or starting new trends with our AI-powered screening tool.
             </p>
             <button className="mt-6 sm:mt-8 lg:mt-10 bg-[#D4AF37] text-black px-6 sm:px-8 lg:px-10 py-2 sm:py-3 lg:py-4 rounded-md text-sm sm:text-base lg:text-lg xl:text-xl font-medium hover:bg-[#C4A137] transition-colors">
-              Get Started
+              <Link to="/trades">Start Trading</Link>
             </button>
           </div>
           

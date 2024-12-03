@@ -103,7 +103,7 @@ export default function Section({ name, stockData }) {
                     </div>
                 </div>
 
-                <div className="mt-8">
+                {/* <div className="mt-8">
                     <h2 className="text-[#D7B257C9] text-xl mb-4">Trade History:</h2>
                     {selectedOption === 'Current' ? (
                         <div className="bg-[#1F1F1F] rounded-lg p-6">
@@ -119,7 +119,7 @@ export default function Section({ name, stockData }) {
                             <TradeHistoryGraph data={stockData.history} />
                         </div>
                     )}
-                </div>
+                </div> */}
             </div>
         );
     };

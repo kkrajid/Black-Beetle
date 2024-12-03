@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import BeetleLogo from "@/assets/images/screener-logo.png";
-
+import { Link } from 'react-router-dom';
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -10,8 +10,8 @@ export function Navbar() {
   const navigate = useNavigate();
 
   const navItems = [
-    { name: 'Home', href: '/' },
-    { name: 'Products', href: '/products' },
+    { name: 'Home', href: '/trades' },
+    { name: 'Products', href: '/trades' },
     // { name: 'Support', href: '/support' },
     // { name: 'Dashboard', href: '/dashboard' },
   ];
@@ -54,21 +54,21 @@ export function Navbar() {
         <div className="flex items-center justify-between h-24">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <a href="/" className="block">
+            <Link to="/" className="block">
               <img
                 src={BeetleLogo}
                 alt="Black Beetle"
                 className="w-auto h-16 sm:h-20"
               />
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.name}
-                href={item.href}
+                to={item.href}
                 className={`${
                   isScrolled 
                     ? 'text-white hover:text-yellow-500' 
@@ -76,7 +76,7 @@ export function Navbar() {
                 } text-sm font-medium transition-colors`}
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
           </div>
 

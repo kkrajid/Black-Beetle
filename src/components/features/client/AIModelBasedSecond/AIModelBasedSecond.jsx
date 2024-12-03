@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowRight, TrendingUp, DollarSign, BarChart3, LineChart } from 'lucide-react';
-
+import { Link } from 'react-router-dom';
 const CandlestickChart = () => (
   <svg className="w-full h-full" viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect width="400" height="200" fill="#1a1a1a"/>
@@ -54,13 +54,13 @@ export function AIModelBasedSecond() {
             </p>
 
             <div>
-              <a 
-                href="#learn-more"
+              <Link 
+                to="/trades"
                 className="inline-flex items-center text-[#D7B257] hover:text-[#c9a64f] transition-colors duration-300"
               >
                 Learn more
                 <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
+              </Link>
             </div>
           </div>
 

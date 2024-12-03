@@ -214,10 +214,10 @@ export function AIBasedModel() {
               Benefit from AI-driven market insights to enhance your trading strategy across diverse asset classes.
             </p>
             <div className="flex justify-end">
-              <a href="#learn-more" className="text-[#D7B257] font-bold hover:text-[#c9a64f] transition duration-150 ease-in-out flex items-center">
+              <Link to="/trades" className="text-[#D7B257] font-bold hover:text-[#c9a64f] transition duration-150 ease-in-out flex items-center">
                 Learn more
                 <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
+              </Link>
             </div>
           </div>
         </div>
