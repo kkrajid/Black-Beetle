@@ -66,7 +66,8 @@ export function StockDetails() {
                     </div>
                     <div className="flex flex-col lg:flex-row justify-center lg:justify-between items-center mt-5">
                         <div className="flex-1 relative flex flex-col lg:flex-row justify-center items-center">
-                            <div className="mt-10 lg:mt-0 bg-white rounded-xl items-center justify-center w-fit p-4">
+                        {/* w-fit */}
+                            <div className="mt-10 lg:mt-0 bg-white rounded-xl items-center justify-center  p-4 w-[60px] h-[60px]">
                                 {/* <img src={`https://logo.clearbit.com/${stockData.stock_index.toLowerCase()}.com`} alt="logo" className="w-[60px] h-[60px] object-contain" /> */}
                             </div>
                             <div className="flex flex-col lg:ml-4 mt-5 lg:mt-0">
