@@ -324,14 +324,14 @@ console.log(tradesData);
                       <span className="opacity-50">|</span>
                       <span>{trade.status}</span>
                     </div>
-                    <span
+                    {/* <span
                       className={`flex-1 text-end ${trade.target > trade.buy
                           ? "text-green-400"
                           : "text-red-400"
                         } font-semibold text-lg`}
                     >
                       {calculatePercentageChange(trade)}
-                    </span>
+                    </span> */}
                   </div>
                 </div>
               </div>
