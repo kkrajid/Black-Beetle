@@ -11,7 +11,7 @@ export function NavbarSecond() {
 
     const navItems = [
       { name: 'Home', href: '/' },
-      { name: 'Products', href: '/products' },
+      { name: 'Products', href: '/trades' },
       // { name: 'Support', href: '/support' },
       // { name: 'Dashboard', href: '/dashboard' },
     ];
