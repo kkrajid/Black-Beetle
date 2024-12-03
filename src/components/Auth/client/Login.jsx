@@ -108,7 +108,7 @@ const Login = () => {
     >
       <div className="w-full max-w-6xl flex flex-col lg:flex-row rounded-lg overflow-hidden relative">
         {/* Left side - Login Form */}
-        <div className="w-full lg:w-1/2 p-8 lg:p-12 bg-black bg-opacity-50 backdrop-blur-sm">
+        <div className="w-full lg:w-1/2 p-8 lg:p-12  bg-opacity-50 backdrop-blur-sm">
           <div className="flex items-center mb-8">
             <img src={encodedLogoURL} alt="" className="w-32 lg:w-44 md:w-44 mr-4"/>
           </div>
