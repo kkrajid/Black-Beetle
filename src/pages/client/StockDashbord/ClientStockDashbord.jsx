@@ -1,6 +1,7 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import { NavbarSecond } from './NavbarSecond';
 import { StockDashboard } from '../../../components/features/client/ClientComponents'
+import { useNavigate } from 'react-router-dom';
 const Curve =`<svg  width="100%" height="100%" viewBox="0 0 1000 800" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g opacity="0.38">
             <path d="M1544.44 143.251C1603.96 254.736 1866.19 222.351 1957.22 135.162C2064.09 32.925 1923.15 -223.001 1886.2 -273.111C1863.05 -304.495 1786.8 -96.4091 1651.86 -75.5516C1509.85 -53.6145 1425.56 -153.547 1438.07 -127.17C1437.45 -105.264 1472.67 8.71083 1544.44 143.251Z" stroke="url(#paint0_linear_312_1615)" stroke-opacity="0.19" stroke-width="5" stroke-miterlimit="10" />
@@ -134,6 +135,21 @@ const Curve =`<svg  width="100%" height="100%" viewBox="0 0 1000 800" fill="none
     </svg>`
 
 const ClientStock = () => {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const authToken = localStorage.getItem('authToken');
+        if (!authToken) {
+            navigate('/login');
+        } else {
+            setIsAuthenticated(true);
+        }
+    }, [navigate]);
+
+    if (!isAuthenticated) {
+        return null; // or you could return a loading spinner here
+    }
     return (
         <div 
         style={{ 

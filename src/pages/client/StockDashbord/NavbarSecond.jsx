@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import BeetleLogo from "@/assets/images/screener-logo.png";
 
 export function NavbarSecond() {
     const [isOpen, setIsOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
-  
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
+
     const navItems = [
       { name: 'Home', href: '/' },
       { name: 'Products', href: '/products' },
@@ -19,8 +22,19 @@ export function NavbarSecond() {
       };
   
       window.addEventListener('scroll', handleScroll);
+      
+      // Check for authToken
+      const authToken = localStorage.getItem('authToken');
+      setIsLoggedIn(!!authToken);
+
       return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    const handleLogout = () => {
+      localStorage.removeItem('authToken');
+      setIsLoggedIn(false);
+      navigate('/');
+    };
   
     return (
       <nav 
@@ -58,18 +72,29 @@ export function NavbarSecond() {
   
             {/* Auth Buttons */}
             <div className="hidden md:flex items-center space-x-4">
-              <a 
-                href="/login" 
-                className="text-sm font-medium transition-colors text-white hover:text-[#D4AF37]"
-              >
-                Login
-              </a>
-              <a 
-                href="/signup" 
-                className="px-6 py-2 rounded-md text-sm font-medium transition-colors bg-[#D4AF37] text-black hover:bg-[#B4941F]"
-              >
-                Signup
-              </a>
+              {isLoggedIn ? (
+                <button 
+                  onClick={handleLogout}
+                  className="px-6 py-2 rounded-md text-sm font-medium transition-colors bg-[#D4AF37] text-black hover:bg-[#B4941F]"
+                >
+                  Logout
+                </button>
+              ) : (
+                <>
+                  <a 
+                    href="/login" 
+                    className="text-sm font-medium transition-colors text-white hover:text-[#D4AF37]"
+                  >
+                    Login
+                  </a>
+                  <a 
+                    href="/signup" 
+                    className="px-6 py-2 rounded-md text-sm font-medium transition-colors bg-[#D4AF37] text-black hover:bg-[#B4941F]"
+                  >
+                    Signup
+                  </a>
+                </>
+              )}
             </div>
   
             {/* Mobile menu button */}
@@ -104,24 +129,38 @@ export function NavbarSecond() {
               </a>
             ))}
             <div className="pt-4 space-y-2">
-              <a
-                href="/login"
-                className="text-white hover:bg-black block w-full px-3 py-2 rounded-md text-base font-medium text-center transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                Login
-              </a>
-              <a
-                href="/signup"
-                className="bg-[#D4AF37] text-black hover:bg-[#B4941F] block w-full px-3 py-2 rounded-md text-base font-medium text-center transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                Signup
-              </a>
+              {isLoggedIn ? (
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setIsOpen(false);
+                  }}
+                  className="bg-[#D4AF37] text-black hover:bg-[#B4941F] block w-full px-3 py-2 rounded-md text-base font-medium text-center transition-colors"
+                >
+                  Logout
+                </button>
+              ) : (
+                <>
+                  <a
+                    href="/login"
+                    className="text-white hover:bg-black block w-full px-3 py-2 rounded-md text-base font-medium text-center transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Login
+                  </a>
+                  <a
+                    href="/signup"
+                    className="bg-[#D4AF37] text-black hover:bg-[#B4941F] block w-full px-3 py-2 rounded-md text-base font-medium text-center transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Signup
+                  </a>
+                </>
+              )}
             </div>
           </div>
         </div>
       </nav>
     );
   }
-  
+

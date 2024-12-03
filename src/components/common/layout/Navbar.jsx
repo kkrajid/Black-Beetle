@@ -1,10 +1,13 @@
-import BeetleLogo from "@/assets/images/screener-logo.png";
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, User } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import BeetleLogo from "@/assets/images/screener-logo.png";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
 
   const navItems = [
     { name: 'Home', href: '/' },
@@ -15,31 +18,38 @@ export function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Change navbar style when scrolled more than 50 pixels
       setIsScrolled(window.scrollY > 50);
     };
 
-    // Add scroll event listener
-    window.addEventListener('scroll', handleScroll);
+    const checkAuth = () => {
+      const authToken = localStorage.getItem('authToken');
+      setIsAuthenticated(!!authToken);
+    };
 
-    // Clean up the event listener
+    window.addEventListener('scroll', handleScroll);
+    checkAuth();
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
+  const handleProfileClick = () => {
+    navigate('/trades');
+  };
+
   return (
     <nav 
-      className={`fixed w-full text-white  transition-all duration-300 ease-in-out ${
+      className={`fixed w-full text-white transition-all duration-300 ease-in-out ${
         isScrolled 
-          ? ' bg-transparent bg-opacity-90 backdrop-blur-sm shadow-md z-50 top-0' 
+          ? 'bg-transparent bg-opacity-90 backdrop-blur-sm shadow-md z-50 top-0' 
           : ''
       }`}
     >
       <div className={`max-w-7xl mx-auto text-white px-4 sm:px-6 lg:px-8 ${
         isScrolled 
-          ? ' bg-transparent bg-opacity-90 backdrop-blur-sm shadow-md z-50 top-0' 
-          : 'bg-[#2D2E2D] rounded-2xl '
+          ? 'bg-transparent bg-opacity-90 backdrop-blur-sm shadow-md z-50 top-0' 
+          : 'bg-[#2D2E2D] rounded-2xl'
       }`}>
         <div className="flex items-center justify-between h-24">
           {/* Logo */}
@@ -62,7 +72,7 @@ export function Navbar() {
                 className={`${
                   isScrolled 
                     ? 'text-white hover:text-yellow-500' 
-                    : ' hover:text-black'
+                    : 'hover:text-black'
                 } text-sm font-medium transition-colors`}
               >
                 {item.name}
@@ -70,28 +80,43 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* Auth Buttons */}
+          {/* Auth Buttons or Profile Icon */}
           <div className="hidden md:flex items-center space-x-4">
-            <a 
-              href="/login" 
-              className={`${
-                isScrolled 
-                  ? 'text-white hover:text-yellow-500' 
-                  : 'text-white hover:text-black'
-              } text-sm font-medium transition-colors`}
-            >
-              Login
-            </a>
-            <a 
-              href="/signup" 
-              className={`${
-                isScrolled 
-                  ? 'bg-black text-white hover:bg-gray-900' 
-                  : 'bg-[#C4A137] text-black hover:bg-white border border-[#C4A137]'
-              } px-6 py-2 rounded-md text-sm font-medium transition-colors`}
-            >
-              Signup
-            </a>
+            {isAuthenticated ? (
+              <button
+                onClick={handleProfileClick}
+                className={`${
+                  isScrolled 
+                    ? 'text-white hover:text-yellow-500' 
+                    : 'text-white hover:text-black'
+                } text-sm font-medium transition-colors`}
+              >
+                <User size={24} />
+              </button>
+            ) : (
+              <>
+                <a 
+                  href="/login" 
+                  className={`${
+                    isScrolled 
+                      ? 'text-white hover:text-yellow-500' 
+                      : 'text-white hover:text-black'
+                  } text-sm font-medium transition-colors`}
+                >
+                  Login
+                </a>
+                <a 
+                  href="/signup" 
+                  className={`${
+                    isScrolled 
+                      ? 'bg-black text-white hover:bg-gray-900' 
+                      : 'bg-[#C4A137] text-black hover:bg-white border border-[#C4A137]'
+                  } px-6 py-2 rounded-md text-sm font-medium transition-colors`}
+                >
+                  Signup
+                </a>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -129,24 +154,37 @@ export function Navbar() {
               {item.name}
             </a>
           ))}
-          <div className="pt-4 space-y-2">
-            <a
-              href="/login"
-              className="text-white hover:bg-gray-800 block w-full px-3 py-2 rounded-md text-base font-medium text-center transition-colors"
-              onClick={() => setIsOpen(false)}
+          {isAuthenticated ? (
+            <button
+              onClick={() => {
+                handleProfileClick();
+                setIsOpen(false);
+              }}
+              className="text-gray-300 hover:bg-gray-800 hover:text-white block w-full px-3 py-2 rounded-md text-base font-medium text-left transition-colors"
             >
-              Login
-            </a>
-            <a
-              href="/signup"
-              className="bg-yellow-500 text-black hover:bg-yellow-400 block w-full px-3 py-2 rounded-md text-base font-medium text-center transition-colors"
-              onClick={() => setIsOpen(false)}
-            >
-              Signup
-            </a>
-          </div>
+              Profile
+            </button>
+          ) : (
+            <div className="pt-4 space-y-2">
+              <a
+                href="/login"
+                className="text-white hover:bg-gray-800 block w-full px-3 py-2 rounded-md text-base font-medium text-center transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                Login
+              </a>
+              <a
+                href="/signup"
+                className="bg-yellow-500 text-black hover:bg-yellow-400 block w-full px-3 py-2 rounded-md text-base font-medium text-center transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                Signup
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </nav>
   );
 }
+
