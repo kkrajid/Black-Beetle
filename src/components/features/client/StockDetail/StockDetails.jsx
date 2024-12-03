@@ -6,6 +6,7 @@ import Circle from './Circle';
 import Graph from './Graph';
 import Curve from './icons/Curve';
 import Section from './sections/Section';
+import { Link } from 'react-router-dom';
 
 const navs = ['Summary', 'Analysis', 'History', 'Prediction v/s Actual Analysis'];
 
@@ -57,9 +58,9 @@ export function StockDetails() {
                         <Curve />
                     </div>
                     <div className="w-full flex items-center">
-                        <Home />
+                        <Link to="/"><Home /></Link>
                         <ArrowRight className="ml-3" />
-                        <span className="text-[#FFFFFFB2] ml-3">Buy</span>
+                        <Link to={"/trades"} className="text-[#FFFFFFB2] ml-3">trades</Link>
                         <ArrowRight className="ml-3" />
                         <span className="text-[#FFFFFFB2] ml-3">{stockData.company_name}</span>
                     </div>
@@ -77,15 +78,15 @@ export function StockDetails() {
                             </div>
                         </div>
                         <div className="w-full lg:flex-1 flex justify-between items-center mt-10 lg:mt-0">
-                            <div className="flex-1 flex flex-col items-center">
+                            <div className="flex-1 flex flex-col items-center mx-10">
                                 <span className="font-extrabold text-white text-lg lg:text-2xl">{stockData.trade_type}</span>
                                 <span className="text-xs text-[#FFFFFFA1]">Type</span>
                             </div>
-                            <div className="flex-1 flex flex-col items-center">
+                            <div className="flex-1 flex flex-col items-center  mx-10">
                                 <span className="font-extrabold text-white text-lg lg:text-2xl">{stockData.segment}</span>
                                 <span className="text-xs text-[#FFFFFFA1]">Asset</span>
                             </div>
-                            <div className="flex-1 flex flex-col items-center">
+                            <div className="flex-1 flex flex-col items-center  mx-10">
                                 <span className="font-extrabold text-white text-lg lg:text-2xl">{new Date(stockData.created_at).toLocaleDateString()}</span>
                                 <span className="text-xs text-[#FFFFFFA1]">Trigger Date</span>
                             </div>

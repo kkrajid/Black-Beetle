@@ -290,8 +290,8 @@ console.log(tradesData);
                 onClick={() => handleStockClick(trade.id)}
               >
 
-                
-                <div className="stock-card__image-wrapper w-[100px] h-[100px] -ml-[50px] -mt-[100px] absolute p-5 bg-white rounded-[35px]">
+
+                {/* <div className="stock-card__image-wrapper w-[100px] h-[100px] -ml-[50px] -mt-[100px] absolute p-5 bg-white rounded-[35px]">
                   <img
                     src={`https://logo.clearbit.com/${trade.stock_index.toLowerCase().replace(/[\d% ]/g, '')}.com`}
                     alt={`${trade.company_name} Logo`}
@@ -300,7 +300,7 @@ console.log(tradesData);
                       e.target.src = '/default-logo.png';
                     }}
                   />
-                </div>
+                </div> */}
                 <div className="w-[100px] -ml-[40px]"></div>
                 <div className="flex-1 flex flex-col">
                   <div className="flex-1 flex justify-end">
@@ -314,7 +314,7 @@ console.log(tradesData);
                   </span>
                
                   <span className="text-white text-sm opacity-[79%]">
-                    {formatTradeDate(trade.expiry_date)}
+                    {/* {formatTradeDate(trade.expiry_date)} */}
                   </span>
                   <div className="flex justify-between mt-2">
                     <div className="flex items-center gap-2 text-[#FFB500]">

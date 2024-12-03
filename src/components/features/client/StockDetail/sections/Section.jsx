@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TradeHistoryGraph from '../TradeHistoryGraph';
+import { AlertCircle } from 'lucide-react'
 
 export default function Section({ name, stockData }) {
     const [clickTime, setClickTime] = useState(null);
@@ -164,18 +165,61 @@ export default function Section({ name, stockData }) {
         </div>
     );
 
+    // const renderPredictionVsActual = () => (
+    //     <div className="text-white">
+    //         <h2 className="text-[#D7B257C9] text-xl mb-4">Prediction v/s Actual Analysis</h2>
+    //         {/* {stockData.insights.map((insight, index) => (
+    //             <div key={index} className="bg-[#1F1F1F] rounded-lg p-6 mb-4">
+    //                 <p>Prediction: {insight.prediction}</p>
+    //                 <p>Actual: {insight.actual}</p>
+    //                 <p>Difference: {Math.abs(insight.actual - insight.prediction)}</p>
+    //             </div>
+    //         ))} */}
+    //         <div>
+    //             <h1>Will only get update ones trade has expired </h1>
+    //         </div>
+
+    //     </div>
+    // );
+
     const renderPredictionVsActual = () => (
-        <div className="text-white">
-            <h2 className="text-[#D7B257C9] text-xl mb-4">Prediction v/s Actual Analysis</h2>
-            {stockData.insights.map((insight, index) => (
-                <div key={index} className="bg-[#1F1F1F] rounded-lg p-6 mb-4">
-                    <p>Prediction: {insight.prediction}</p>
-                    <p>Actual: {insight.actual}</p>
-                    <p>Difference: {Math.abs(insight.actual - insight.prediction)}</p>
-                </div>
-            ))}
+        <div className="space-y-4">
+          <h2 className="text-[#D7B257C9] text-xl">Prediction v/s Actual Analysis</h2>
+          <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 rounded" role="alert">
+            <div className="flex items-center">
+              <AlertCircle className="h-5 w-5 mr-2" />
+              <p className="font-bold">Analysis Pending</p>
+            </div>
+            <p className="text-sm mt-2">
+              The Prediction vs Actual analysis will be updated once the trade has expired.
+            </p>
+          </div>
+          {/* Uncomment and modify this section when you have actual data
+          {stockData.insights.map((insight, index) => (
+            <div 
+              key={index} 
+              className={`border-l-4 p-4 rounded ${
+                insight.actual >= insight.prediction 
+                  ? "bg-green-100 border-green-500 text-green-700" 
+                  : "bg-red-100 border-red-500 text-red-700"
+              }`} 
+              role="alert"
+            >
+              <div className="flex items-center">
+                <AlertCircle className="h-5 w-5 mr-2" />
+                <p className="font-bold">Trade {index + 1}</p>
+              </div>
+              <div className="text-sm mt-2">
+                <p>Prediction: {insight.prediction}</p>
+                <p>Actual: {insight.actual}</p>
+                <p>Difference: {Math.abs(insight.actual - insight.prediction)}</p>
+              </div>
+            </div>
+          ))}
+          */}
         </div>
-    );
+      )
+      
 
     const renderContent = () => {
         switch (name) {

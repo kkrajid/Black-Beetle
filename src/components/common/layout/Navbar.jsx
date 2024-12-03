@@ -12,8 +12,8 @@ export function Navbar() {
   const navItems = [
     { name: 'Home', href: '/' },
     { name: 'Products', href: '/products' },
-    { name: 'Support', href: '/support' },
-    { name: 'Dashboard', href: '/dashboard' },
+    // { name: 'Support', href: '/support' },
+    // { name: 'Dashboard', href: '/dashboard' },
   ];
 
   useEffect(() => {
