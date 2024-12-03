@@ -19,7 +19,7 @@ export function StockDetails() {
 
     useEffect(() => {
         setLoading(true);
-        fetch(`https://13.51.169.229/admin-side/trade/${symbol}/`)
+        fetch(`https://backend.blackbeetlescreen.com/admin-side/trade/${symbol}/`)
             .then(response => response.json())
             .then(data => {
                 setStockData(data);
