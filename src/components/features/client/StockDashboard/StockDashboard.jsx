@@ -42,7 +42,7 @@ export function StockDashboard() {
     }
 
     // Create new WebSocket connection
-    const newSocket = new WebSocket("wss://13.51.169.229/ws/trades/");
+    const newSocket = new WebSocket("wss://backend.blackbeetlescreen.com/ws/trades/");
 
     newSocket.onopen = () => {
       setConnectionStatus("Connected");
