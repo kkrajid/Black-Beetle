@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Bell } from 'lucide-react';
 import BeetleLogo from "@/assets/images/screener-logo.png";
 
 export function NavbarSecond() {
     const [isOpen, setIsOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [notifications, setNotifications] = useState([]);
+    const [showNotifications, setShowNotifications] = useState(false);
+    const notificationRef = useRef(null);
     const navigate = useNavigate();
 
     const navItems = [
       { name: 'Home', href: '/' },
       { name: 'Products', href: '/trades' },
-      // { name: 'Support', href: '/support' },
-      // { name: 'Dashboard', href: '/dashboard' },
     ];
   
     useEffect(() => {
@@ -27,13 +28,35 @@ export function NavbarSecond() {
       const authToken = localStorage.getItem('authToken');
       setIsLoggedIn(!!authToken);
 
-      return () => window.removeEventListener('scroll', handleScroll);
+      // Fetch notifications (simulated)
+      setNotifications([
+        { id: 1, message: "New product available", time: "2 hours ago" },
+        { id: 2, message: "Your order has been shipped", time: "1 day ago" },
+        { id: 3, message: "Price drop on your wishlist item", time: "3 days ago" },
+      ]);
+
+      const handleClickOutside = (event) => {
+        if (notificationRef.current && !notificationRef.current.contains(event.target)) {
+          setShowNotifications(false);
+        }
+      };
+
+      document.addEventListener('mousedown', handleClickOutside);
+
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
     }, []);
 
     const handleLogout = () => {
       localStorage.removeItem('authToken');
       setIsLoggedIn(false);
       navigate('/');
+    };
+
+    const toggleNotifications = () => {
+      setShowNotifications(!showNotifications);
     };
   
     return (
@@ -70,8 +93,32 @@ export function NavbarSecond() {
               ))}
             </div>
   
-            {/* Auth Buttons */}
+            {/* Auth Buttons and Notifications */}
             <div className="hidden md:flex items-center space-x-4">
+              {isLoggedIn && (
+                <div className="relative" ref={notificationRef}>
+                  <button
+                    onClick={toggleNotifications}
+                    className="text-white hover:text-[#D4AF37] transition-colors"
+                    aria-label="Notifications"
+                  >
+                    <Bell size={24} />
+                  </button>
+                  {showNotifications && (
+                    <div className="absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg overflow-hidden z-20">
+                      <div className="py-2">
+                        <h3 className="text-sm font-medium text-gray-900 px-4 py-2">Notifications</h3>
+                        {notifications.map((notification) => (
+                          <div key={notification.id} className="px-4 py-3 hover:bg-gray-100">
+                            <p className="text-sm text-gray-800">{notification.message}</p>
+                            <p className="text-xs text-gray-500 mt-1">{notification.time}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
               {isLoggedIn ? (
                 <button 
                   onClick={handleLogout}
@@ -98,7 +145,31 @@ export function NavbarSecond() {
             </div>
   
             {/* Mobile menu button */}
-            <div className="md:hidden">
+            <div className="md:hidden flex items-center">
+              {isLoggedIn && (
+                <div className="relative mr-4" ref={notificationRef}>
+                  <button
+                    onClick={toggleNotifications}
+                    className="text-white hover:text-[#D4AF37] transition-colors"
+                    aria-label="Notifications"
+                  >
+                    <Bell size={24} />
+                  </button>
+                  {showNotifications && (
+                    <div className="absolute right-0 mt-2 w-80 bg-white rounded-md shadow-lg overflow-hidden z-20">
+                      <div className="py-2">
+                        <h3 className="text-sm font-medium text-gray-900 px-4 py-2">Notifications</h3>
+                        {notifications.map((notification) => (
+                          <div key={notification.id} className="px-4 py-3 hover:bg-gray-100">
+                            <p className="text-sm text-gray-800">{notification.message}</p>
+                            <p className="text-xs text-gray-500 mt-1">{notification.time}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="text-white hover:text-[#D4AF37] transition-colors"

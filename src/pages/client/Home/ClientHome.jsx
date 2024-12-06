@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar } from '../../../components/common/layout/Navbar';
+import { Navbar } from '../../../components/common/layout/Navbar/Navbar';
 import {AIBasedModel, AIModelBasedSecond, Features, Hero } from '../../../components/features/client/ClientComponents';
 const svgBackground = `
 <svg width="1422" height="1104" viewBox="0 0 1422 1104" fill="none" xmlns="http://www.w3.org/2000/svg">
